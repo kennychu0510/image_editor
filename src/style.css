@@ -1,0 +1,43 @@
+#app {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 80vh;
+}
+
+.image-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-image: url('/public/images/no_background.png');
+  background-repeat: repeat;
+  background-size: 500px 250px;
+}
+
+#controller {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#color-value-label {
+  margin-top: 10px;
+}
+
+.caption {
+  text-align: center;
+}
+
+#img-original:hover {
+  cursor: crosshair;
+}
+
+#color-picker-row {
+  display: flex;
+  align-items: center;
+}
+
+#color-value-label {
+  margin-right: 10px;
+}

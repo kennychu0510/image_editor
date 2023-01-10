@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="./src/style.css">
+  <title>Image Editor</title>
+</head>
+
+<body>
+  <div id="app">
+    <div>
+      <div id="original-container" class="image-container">
+        <img id="img-original" src="/images/sample.png" />
+      </div>
+      <h2 class="caption">Original Image</h2>
+    </div>
+    <div>
+      <div id="after-container" class="image-container">
+        <img id="img-after" />
+      </div>
+      <h2 class="caption">After Image</h2>
+    </div>
+  </div>
+  <div id="controller">
+    <div id="color-picker-row">
+      <div id="color-value-label">RGBA: </div>
+      <input id="color-value" type="color"></input>
+    </div>
+
+    <script type="module" src="/src/main.ts"></script>
+</body>
+
+</html>
