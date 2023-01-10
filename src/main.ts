@@ -32,6 +32,16 @@ for (let i = 0; i < pixelData.length; i += 4) {
   }
 }
 
+let colorValuesInOrder = Object.entries(count) as any 
+colorValuesInOrder = colorValuesInOrder.sort((a: [string, number], b: [string, number]) => {
+  if (a[1] < b[1]) {
+    return 1
+  } else {
+    return -1
+  }
+})
+console.log(colorValuesInOrder.slice(0, 10))
+
 // for (let i = 0; i < pixelData.length; i+=4) {
 //   const rgba = [pixelData[i], pixelData[i+1], pixelData[i+2], pixelData[i+3]];
 //   let stringRGBA = JSON.stringify(rgba);
