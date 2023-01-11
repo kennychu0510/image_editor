@@ -2,7 +2,7 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  height: 80vh;
+  height: 60vh;
 }
 
 .image-container {
@@ -19,10 +19,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-#color-value-label {
-  margin-top: 10px;
+  flex-direction: column;
 }
 
 .caption {
@@ -33,11 +30,24 @@
   cursor: crosshair;
 }
 
-#color-picker-row {
+#color-picker-row, .primary-colors {
   display: flex;
   align-items: center;
+  margin-bottom: 10px;
 }
 
 #color-value-label {
   margin-right: 10px;
+}
+
+.color-value-label {
+  width: 20px;
+}
+
+.primary-colors {
+  margin-bottom: 5px;
+}
+
+.color-value {
+  margin-left: 10px;
 }

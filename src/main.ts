@@ -8,6 +8,10 @@ function selectElement(selector: string) {
 const originalImg = selectElement('#img-original') as HTMLImageElement;
 const afterImgContainer = selectElement('#after-container') as HTMLDivElement;
 const colorPicker = selectElement('#color-value') as HTMLInputElement;
+const PRIMARY_COLOR_DISPLAY = selectElement('#main-color input') as HTMLInputElement
+const SECONDARY_COLOR_DISPLAY = selectElement('#secondary-color input') as HTMLInputElement
+const TERTIARY_COLOR_DISPLAY = selectElement('#tertiary-color input') as HTMLInputElement
+
 
 const width = originalImg.naturalWidth;
 const height = originalImg.naturalHeight;
@@ -40,7 +44,33 @@ colorValuesInOrder = colorValuesInOrder.sort((a: [string, number], b: [string, n
     return -1
   }
 })
-console.log(colorValuesInOrder.slice(0, 10))
+
+const TOP_3_COLORS = colorValuesInOrder.slice(0, 3);
+
+console.log(JSON.parse(TOP_3_COLORS[0][0]))
+
+const MAIN_COLOR_RGBA = JSON.parse(TOP_3_COLORS[0][0])
+const SECONDARY_COLOR_RGBA = JSON.parse(TOP_3_COLORS[1][0])
+const TERTIARY_COLOR_RGBA = JSON.parse(TOP_3_COLORS[2][0])
+
+const MAIN_COLOR_RGB = {
+  r: MAIN_COLOR_RGBA[0],
+  g: MAIN_COLOR_RGBA[1],
+  b: MAIN_COLOR_RGBA[2],
+}
+const SECONDARY_COLOR_RGB = {
+  r: SECONDARY_COLOR_RGBA[0],
+  g: SECONDARY_COLOR_RGBA[1],
+  b: SECONDARY_COLOR_RGBA[2],
+}
+const TERTIARY_COLOR_RGB = {
+  r: TERTIARY_COLOR_RGBA[0],
+  g: TERTIARY_COLOR_RGBA[1],
+  b: TERTIARY_COLOR_RGBA[2],
+}
+PRIMARY_COLOR_DISPLAY.value = RGBToHex(MAIN_COLOR_RGB)
+SECONDARY_COLOR_DISPLAY.value = RGBToHex(SECONDARY_COLOR_RGB)
+TERTIARY_COLOR_DISPLAY.value = RGBToHex(TERTIARY_COLOR_RGB)
 
 // for (let i = 0; i < pixelData.length; i+=4) {
 //   const rgba = [pixelData[i], pixelData[i+1], pixelData[i+2], pixelData[i+3]];
