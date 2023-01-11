@@ -49,8 +49,6 @@ colorValuesInOrder = colorValuesInOrder.sort((a: [string, number], b: [string, n
 
 const TOP_3_COLORS = colorValuesInOrder.slice(0, 3);
 
-console.log(JSON.parse(TOP_3_COLORS[0][0]));
-
 const MAIN_COLOR_RGBA = JSON.parse(TOP_3_COLORS[0][0]);
 const SECONDARY_COLOR_RGBA = JSON.parse(TOP_3_COLORS[1][0]);
 const TERTIARY_COLOR_RGBA = JSON.parse(TOP_3_COLORS[2][0]);
@@ -155,3 +153,83 @@ function renderAfterImage(ctx: CanvasRenderingContext2D, image: HTMLImageElement
   IMAGE_DATA = ctx.getImageData(0, 0, WIDTH, HEIGHT);
   PIXEL_DATA = IMAGE_DATA.data;
 }
+
+function magnify(imgID: string, zoom: number) {
+  let img: HTMLImageElement, glass: HTMLElement, w: number, h: number, bw: number;
+  img = selectElement(imgID) as HTMLImageElement;
+
+  /* Create magnifier glass: */
+  glass = document.createElement('DIV');
+  glass.setAttribute('class', 'img-magnifier-glass');
+
+  /* Insert magnifier glass: */
+  img.parentElement?.insertBefore(glass, img);
+
+  /* Set background properties for the magnifier glass: */
+  glass.style.backgroundImage = "url('" + img.src + "')";
+  glass.style.backgroundRepeat = 'no-repeat';
+  glass.style.backgroundSize = img.width * zoom + 'px ' + img.height * zoom + 'px';
+  bw = 3;
+  w = glass.offsetWidth / 2;
+  h = glass.offsetHeight / 2;
+
+  /* Execute a function when someone moves the magnifier glass over the image: */
+  glass.addEventListener('mousemove', moveMagnifier);
+  img.addEventListener('mousemove', moveMagnifier);
+
+  /*and also for touch screens:*/
+  glass.addEventListener('touchmove', moveMagnifier);
+  img.addEventListener('touchmove', moveMagnifier);
+  function moveMagnifier(e: TouchEvent | MouseEvent) {
+    let pos, x, y;
+    /* Prevent any other actions that may occur when moving over the image */
+    e.preventDefault();
+    /* Get the cursor's x and y positions: */
+    pos = getCursorPos(e);
+    x = pos.x;
+    y = pos.y;
+
+    /* Prevent the magnifier glass from being positioned outside the image: */
+    const leftOffset = originalImg.getBoundingClientRect().left;
+    const topOffset = originalImg.getBoundingClientRect().top;
+
+    if (x > img.width - w / zoom + leftOffset/2 ) {
+      x = img.width - w / zoom + leftOffset/2;
+    }
+    if (x < w / zoom - leftOffset/2 ) {
+      x = w / zoom - leftOffset/2;
+    }
+    if (y > img.height - h / zoom + topOffset/2) {
+      y = img.height - h / zoom + topOffset/2;
+    }
+    if (y  < h / zoom - topOffset/2) {
+      y = h / zoom - topOffset/2;
+    }
+    /* Set the position of the magnifier glass: */
+    glass.style.left = x - w + leftOffset + 'px';
+    glass.style.top = y - h + topOffset + 'px';
+    /* Display what the magnifier glass "sees": */
+    glass.style.backgroundPosition = '-' + (x * zoom - w + bw) + 'px -' + (y * zoom - h + bw) + 'px';
+  }
+
+  function getCursorPos(e: any) {
+    let a,
+      x = 0,
+      y = 0;
+    e = e || window.event;
+    /* Get the x and y positions of the image: */
+    a = img.getBoundingClientRect();
+    
+    /* Calculate the cursor's x and y coordinates, relative to the image: */
+    x = e.x - a.left;
+    y = e.y - a.top;
+    /* Consider any page scrolling: */
+    x = x - window.pageXOffset;
+    y = y - window.pageYOffset;
+
+    return { x: x, y: y };
+  }
+}
+
+// magnify('#img-original', 2);
+

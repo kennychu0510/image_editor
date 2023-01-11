@@ -1,3 +1,6 @@
+* {box-sizing: border-box;}
+
+
 #app {
   display: flex;
   justify-content: space-around;
@@ -60,4 +63,41 @@
 
 #remove-selected-color-btn {
   margin-left: 10px;
+}
+
+/* * {box-sizing: border-box;} */
+.img-magnifier-container {
+  position: relative;
+}
+
+
+.img-magnifier-glass {
+  position: absolute;
+  border: 3px solid #000;
+  border-radius: 50%;
+  cursor: none;
+  /*Set the size of the magnifier glass:*/
+  width: 100px;
+  height: 100px;
+  /* visibility: hidden; */
+}
+
+.img-magnifier-glass::after {
+  content: '';
+  height: 3px;
+  aspect-ratio: 1;
+  background-color: red;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 10px;
+}
+
+.zoom-preview {
+  height: 100px;
+  width: 100px;
+  border: 1px solid #000;
+  margin-left: 20px;
+  background-repeat: no-repeat;
 }
