@@ -26,6 +26,12 @@
   text-align: center;
 }
 
+#img-original, #img-after {
+  max-width: 500px;
+  max-height: 300px;
+}
+
+
 #img-original:hover {
   cursor: crosshair;
 }
