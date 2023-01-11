@@ -7,10 +7,11 @@ function selectElement(selector: string) {
 
 const originalImg = selectElement('#img-original') as HTMLImageElement;
 const afterImgContainer = selectElement('#after-container') as HTMLDivElement;
-const colorPicker = selectElement('#color-value') as HTMLInputElement;
+const SELECTED_COLOR = selectElement('#color-value') as HTMLInputElement;
 const PRIMARY_COLOR_DISPLAY = selectElement('#main-color input') as HTMLInputElement
 const SECONDARY_COLOR_DISPLAY = selectElement('#secondary-color input') as HTMLInputElement
 const TERTIARY_COLOR_DISPLAY = selectElement('#tertiary-color input') as HTMLInputElement
+const REMOVE_COLOR_BUTTON = selectElement('#remove-selected-color-btn') as HTMLButtonElement
 
 
 const width = originalImg.naturalWidth;
@@ -93,8 +94,6 @@ originalImg.addEventListener('click', (e) => {
   let imageX = Math.round(x - imgPos.x);
   const imageY = Math.round(y - imgPos.y);
 
-  console.log({ imageX, imageY });
-
   const pixelIndex = imageY * 4 * width + imageX * 4;
 
   const pixel = {
@@ -104,8 +103,8 @@ originalImg.addEventListener('click', (e) => {
     a: pixelData[pixelIndex + 3],
   };
 
-  colorPicker.value = RGBToHex(pixel);
-  console.log(RGBToHex(pixel));
+  SELECTED_COLOR.dataset.rgba = JSON.stringify([pixelData[pixelIndex], pixelData[pixelIndex+1], pixelData[pixelIndex+2], pixelData[pixelIndex+3]]);
+  SELECTED_COLOR.value = RGBToHex(pixel);
 });
 
 function RGBToHex(pixel: { r: number; g: number; b: number }) {
@@ -120,3 +119,15 @@ function RGBToHex(pixel: { r: number; g: number; b: number }) {
 
   return '#' + _r + _g + _b;
 }
+
+REMOVE_COLOR_BUTTON.addEventListener('click', () => {
+  const RGBA = SELECTED_COLOR.dataset.rgba
+  for (let i = 0; i < pixelData.length; i += 4) {
+    const rgba = [pixelData[i], pixelData[i + 1], pixelData[i + 2], pixelData[i + 3]];
+    let stringRGBA = JSON.stringify(rgba);
+    if (stringRGBA === RGBA) {
+      pixelData[i+3] = 0
+    }
+  }
+  ctx.putImageData(imageData, 0, 0);
+})
